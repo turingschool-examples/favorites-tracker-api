@@ -1,5 +1,5 @@
 {
-  "name": "song-tracker-api",
+  "name": "mod3-tracker-api",
   "version": "1.0.0",
   "description": "API for Song Tracker project",
   "main": "server.js",
@@ -10,6 +10,8 @@
   "author": "Turing School of Software and Design",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "knex": "^0.19.3",
+    "pg": "^7.12.1"
   }
 }
