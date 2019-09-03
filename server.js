@@ -60,14 +60,22 @@ function findUser(request, response, next) {
 // Favorites helper functions
 
 function addFavorite(request, response, tableName, data) {
-  database('moviefavorites').insert(data, '*')
+  database(tableName).insert(data, '*')
     .then(favorite => {
       if (favorite) {
         return response.status(201).json(favorite[0]);
       } else {
         // Incorrect information was sent to create favorite
-        return response.status(422).json({error: `Could not create movie favorite for user ${user_id}`});
+        return response.status(422).json({error: `Could not create favorite for user ${data.user_id}`});
       }
+    })
+    .catch(err => response.status(500).json({error: err}));
+}
+
+function findFavoritesForUser(request, response, tableName, user_id) {
+  database(tableName).where({user_id})
+    .then(favorites => {
+      return response.status(200).json({favorites});
     })
     .catch(err => response.status(500).json({error: err}));
 }
@@ -77,7 +85,8 @@ function addFavorite(request, response, tableName, data) {
 // Get all movie favorites for a user
 app.get('/api/v1/users/:user_id/moviefavorites', findUser, (request, response) => {
   const { user_id } = request.params;
-  
+
+  return findFavoritesForUser(request, response, 'moviefavorites', user_id);
 });
 
 // Add movie favorite for a user
@@ -91,6 +100,11 @@ app.post('/api/v1/users/:user_id/moviefavorites', findUser, (request, response) 
     'moviefavorites',
     { movie_id, user_id, title, poster_path, release_date, vote_average, overview }
   );
+});
+
+// Delete movie favorite for a user
+app.delete('/api/v1/users/:user_id/moviefavorites/:movie_id', findUser, (request, response) => {
+
 });
 
 // Songs
