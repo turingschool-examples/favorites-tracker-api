@@ -20,8 +20,9 @@ app.get('/api/v1/login', (request, response) => {
       if (users.length) {
         const { id, name, email } = users[0];
         return response.status(200).json();
+      } else {
+        return response.status(401).json({error: "Username or password incorrect"});
       }
-      return response.status(401).json({error: "Username or password incorrect"});
     })
     .catch(err => response.status(500).json({error: err}));
 });
@@ -34,14 +35,63 @@ app.post('/api/v1/users', (request, response) => {
     .then(id => {
       if (id.length) {
         return response.status(201).json({ name, email, id: id[0] });
+      } else {
+        return response.status(422).json({error: "Could not create user"});
       }
-      return response.status(422).json({error: "Could not create user"});
     })
     .catch(err => response.status(500).json({error: err}));
 });
 
-// Movies
+// Favorites middleware functions
 
+function findUser(request, response, next) {
+  const id = request.params.user_id;
+  database('users').where({id})
+    .then(users => {
+      if (users.length) {
+        next();
+      } else {
+        return response.status(404).json({error: `User id:${id} does not exist`});
+      }
+    })
+    .catch(err => response.status(500).json({error: `Server error finding user: ${err}`}));
+}
+
+// Favorites helper functions
+
+function addFavorite(request, response, tableName, data) {
+  database('moviefavorites').insert(data, '*')
+    .then(favorite => {
+      if (favorite) {
+        return response.status(201).json(favorite[0]);
+      } else {
+        // Incorrect information was sent to create favorite
+        return response.status(422).json({error: `Could not create movie favorite for user ${user_id}`});
+      }
+    })
+    .catch(err => response.status(500).json({error: err}));
+}
+
+// ROUTES
+// Movies
+// Get all movie favorites for a user
+app.get('/api/v1/users/:user_id/moviefavorites', findUser, (request, response) => {
+  const { user_id } = request.params;
+  
+});
+
+// Add movie favorite for a user
+app.post('/api/v1/users/:user_id/moviefavorites', findUser, (request, response) => {
+  const { user_id } = request.params;
+  const { movie_id, title, poster_path, release_date, vote_average, overview } = request.body;
+  
+  return addFavorite(
+    request,
+    response,
+    'moviefavorites',
+    { movie_id, user_id, title, poster_path, release_date, vote_average, overview }
+  );
+});
 
 // Songs
 
