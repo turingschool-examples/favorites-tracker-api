@@ -87,6 +87,10 @@ function deleteFavoriteForUser(request, response, tableName) {
 
   if (tableName === 'moviefavorites') {
     var criteria = {movie_id: request.params.movie_id, user_id};
+  } else if () {
+
+  } else if () {
+
   }
 
   // Strange error here where if invalid movie_id is supplied, then it goes tot he catch
@@ -115,14 +119,8 @@ app.get('/api/v1/users/:user_id/:favorites_table', findUser, (request, response)
 // Add favorite for a user
 app.post('/api/v1/users/:user_id/:favorites_table', findUser, (request, response) => {
   const { user_id, favorites_table } = request.params;
-  const { movie_id, title, poster_path, release_date, vote_average, overview } = request.body;
   
-  return addFavoriteForUser(
-    request,
-    response,
-    favorites_table,
-    { movie_id, user_id, title, poster_path, release_date, vote_average, overview }
-  );
+  return addFavoriteForUser(request, response, favorites_table, request.body);
 });
 
 // Delete favorite for a user
