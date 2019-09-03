@@ -57,7 +57,33 @@ function findUser(request, response, next) {
     .catch(err => response.status(500).json({error: `Server error finding user: ${err}`}));
 }
 
-// Favorites helper functions
+
+// FAVORITES ROUTES
+// Get all favorites for a user
+app.get('/api/v1/users/:user_id/:favorites_table', findUser, (request, response) => {
+  const {favorites_table} = request.params;
+
+  return findFavoritesForUser(request, response, favorites_table);
+});
+
+function findFavoritesForUser(request, response, tableName) {
+  const { user_id } = request.params;
+
+  database(tableName).where({user_id})
+    .then(favorites => {
+      return response.status(200).json({favorites});
+    })
+    .catch(err => response.status(500).json({error: err}));
+}
+
+
+
+// Add favorite for a user
+app.post('/api/v1/users/:user_id/:favorites_table', findUser, (request, response) => {
+  const { user_id, favorites_table } = request.params;
+  
+  return addFavoriteForUser(request, response, favorites_table, request.body);
+});
 
 function addFavoriteForUser(request, response, tableName, data) {
   database(tableName).insert(data, '*')
@@ -72,24 +98,23 @@ function addFavoriteForUser(request, response, tableName, data) {
     .catch(err => response.status(500).json({error: err}));
 }
 
-function findFavoritesForUser(request, response, tableName) {
-  const { user_id } = request.params;
 
-  database(tableName).where({user_id})
-    .then(favorites => {
-      return response.status(200).json({favorites});
-    })
-    .catch(err => response.status(500).json({error: err}));
-}
+
+// Delete favorite for a user
+app.delete('/api/v1/users/:user_id/:favorites_table/:favorite_id', findUser, (request, response) => {
+  const {favorites_table} = request.params;
+
+  return deleteFavoriteForUser(request, response, favorites_table);
+});
 
 function deleteFavoriteForUser(request, response, tableName) {
   const { user_id } = request.params;
 
   if (tableName === 'moviefavorites') {
-    var criteria = {movie_id: request.params.movie_id, user_id};
-  } else if () {
+    var criteria = {movie_id: request.params.favorite_id, user_id};
+  } else if (tableName === 'bookFavorites') {
 
-  } else if () {
+  } else if (tableName === 'albumFavorites') {
 
   }
 
@@ -108,27 +133,6 @@ function deleteFavoriteForUser(request, response, tableName) {
     .catch(err => response.status(500).json({error: err}));
 }
 
-// FAVORITES ROUTES
-// Get all favorites for a user
-app.get('/api/v1/users/:user_id/:favorites_table', findUser, (request, response) => {
-  const {favorites_table} = request.params;
-
-  return findFavoritesForUser(request, response, favorites_table);
-});
-
-// Add favorite for a user
-app.post('/api/v1/users/:user_id/:favorites_table', findUser, (request, response) => {
-  const { user_id, favorites_table } = request.params;
-  
-  return addFavoriteForUser(request, response, favorites_table, request.body);
-});
-
-// Delete favorite for a user
-app.delete('/api/v1/users/:user_id/:favorites_table/:movie_id', findUser, (request, response) => {
-  const {favorites_table} = request.params;
-
-  return deleteFavoriteForUser(request, response, favorites_table);
-});
 
 
 app.listen(app.get('port'), () => {
