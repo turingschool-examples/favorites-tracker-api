@@ -64,8 +64,8 @@ The `:favorites_id` should be replaced with the `id` of the favorite (the `movie
 The body of the POST request to add a favorite will differ depending on what data you are working with:
 
 * `moviefavorites` requires: `movie_id (Integer), title (String), poster_path (String), release_date (String), vote_average (String), overview (String)`
-* `bookfavorites` requires: `book_id (Integer), author_name (String), book_name VARCHAR (String), artworkUrl100 (String), release_date (String), description (String), primary_genre_name (String)`
-* `albumfavorites` requires: `album_id (Integer), artist_name (String), album_name (String), artworkUrl100 (String), release_date (String), content_advisory_rating (String), primary_genre_name (String)`
+* `bookfavorites` requires: `book_id (Integer), author_name (String), book_name VARCHAR (String), artwork_url (String), release_date (String), description (String), primary_genre_name (String)`
+* `albumfavorites` requires: `album_id (Integer), artist_name (String), album_name (String), artwork_url (String), release_date (String), content_advisory_rating (String), primary_genre_name (String)`
 
 *Note:* The object keys passed in the request body will not completely match the object keys given back from the iTunes Search API
 
