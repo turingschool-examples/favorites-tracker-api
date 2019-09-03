@@ -42,8 +42,8 @@ You will be using the fetch API to make all your API calls. If you are making a 
 
 The database starts off with a single user inside. -> { email: "alan@turing.io" password: "password" }
 
-| Purpose | URL | Verb | Request URL Parameters | Request Body | Sample Success Response |
-|----|----|----|----|----|----|
+| Purpose | URL | Verb | Request Body | Sample Success Response |
+|----|----|----|----|----|
 | Login a user |`/api/v1/login`| GET | `{email: <String>, password: <String>}` | For matching email and password: `{id: 2, name: "Alex", email: "alex@gmail.com"}` |
 | Create new user account |`/api/v1/users`| POST | `{name: <String>, email: <String>, password: <String>}` | For successful new account: `{id: 1, name: "Alan", email: "alan@turing.io"}` |
 
@@ -69,8 +69,8 @@ The body of the POST request to add a favorite will differ depending on what dat
 
 *Note:* The object keys passed in the request body will not completely match the object keys given back from the iTunes Search API
 
-| Purpose | URL | Verb | Request URL Parameters | Request Body | Sample Success Response |
-|----|----|----|----|----|----|
+| Purpose | URL | Verb | Request Body | Sample Success Response |
+|----|----|----|----|----|
 | Add a favorite for a user | `/api/v1/users/:user_id/:favorites_type` | POST | `{see above for information to include in this object}` | `{}` |
 | Get all favorites for a user | `/api/v1/users/:user_id/:favorites_type` | GET | none | `{favorites: [array of favorites]}` |
 | Delete a favorite for a user | `/api/v1/users/:user_id/:favorites_type/:favorite_id` | DELETE | none | 204 status code, no response body content |
