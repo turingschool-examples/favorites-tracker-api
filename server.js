@@ -104,7 +104,19 @@ app.post('/api/v1/users/:user_id/moviefavorites', findUser, (request, response) 
 
 // Delete movie favorite for a user
 app.delete('/api/v1/users/:user_id/moviefavorites/:movie_id', findUser, (request, response) => {
+  const { user_id, movie_id } = request.params;
 
+  database('moviefavorites').where({movie_id})
+    .then(favorites => {
+      if (favorites.length) {
+        database('moviefavorites').where({movie_id}).del()
+          .then(numRows => response.sendStatus(204))
+          .catch(err => response.status(500).json({error: err}));
+      } else {
+        return response.status(404).json({error: `No records matched favorite id:${movie_id} for this user`});
+      }
+    })
+    .catch(err => response.status(500).json({error: err}));
 });
 
 // Songs
