@@ -19,7 +19,7 @@ app.get('/api/v1/login', (request, response) => {
     .then(users => {
       if (users.length) {
         const { id, name, email } = users[0];
-        return response.status(200).json();
+        return response.status(200).json({ id, name, email });
       } else {
         return response.status(401).json({error: "Username or password incorrect"});
       }
@@ -59,7 +59,7 @@ function findUser(request, response, next) {
 
 // Favorites helper functions
 
-function addFavorite(request, response, tableName, data) {
+function addFavoriteForUser(request, response, tableName, data) {
   database(tableName).insert(data, '*')
     .then(favorite => {
       if (favorite) {
@@ -72,7 +72,9 @@ function addFavorite(request, response, tableName, data) {
     .catch(err => response.status(500).json({error: err}));
 }
 
-function findFavoritesForUser(request, response, tableName, user_id) {
+function findFavoritesForUser(request, response, tableName) {
+  const { user_id } = request.params;
+
   database(tableName).where({user_id})
     .then(favorites => {
       return response.status(200).json({favorites});
@@ -80,36 +82,19 @@ function findFavoritesForUser(request, response, tableName, user_id) {
     .catch(err => response.status(500).json({error: err}));
 }
 
-// ROUTES
-// Movies
-// Get all movie favorites for a user
-app.get('/api/v1/users/:user_id/moviefavorites', findUser, (request, response) => {
+function deleteFavoriteForUser(request, response, tableName) {
   const { user_id } = request.params;
 
-  return findFavoritesForUser(request, response, 'moviefavorites', user_id);
-});
+  if (tableName === 'moviefavorites') {
+    var criteria = {movie_id: request.params.movie_id, user_id};
+  }
 
-// Add movie favorite for a user
-app.post('/api/v1/users/:user_id/moviefavorites', findUser, (request, response) => {
-  const { user_id } = request.params;
-  const { movie_id, title, poster_path, release_date, vote_average, overview } = request.body;
-  
-  return addFavorite(
-    request,
-    response,
-    'moviefavorites',
-    { movie_id, user_id, title, poster_path, release_date, vote_average, overview }
-  );
-});
-
-// Delete movie favorite for a user
-app.delete('/api/v1/users/:user_id/moviefavorites/:movie_id', findUser, (request, response) => {
-  const { user_id, movie_id } = request.params;
-
-  database('moviefavorites').where({movie_id})
+  // Strange error here where if invalid movie_id is supplied, then it goes tot he catch
+  // and throws error without message...
+  database(tableName).where(criteria)
     .then(favorites => {
       if (favorites.length) {
-        database('moviefavorites').where({movie_id}).del()
+        database(tableName).where(criteria).del()
           .then(numRows => response.sendStatus(204))
           .catch(err => response.status(500).json({error: err}));
       } else {
@@ -117,13 +102,35 @@ app.delete('/api/v1/users/:user_id/moviefavorites/:movie_id', findUser, (request
       }
     })
     .catch(err => response.status(500).json({error: err}));
+}
+
+// FAVORITES ROUTES
+// Get all favorites for a user
+app.get('/api/v1/users/:user_id/:favorites_table', findUser, (request, response) => {
+  const {favorites_table} = request.params;
+
+  return findFavoritesForUser(request, response, favorites_table);
 });
 
-// Songs
+// Add favorite for a user
+app.post('/api/v1/users/:user_id/:favorites_table', findUser, (request, response) => {
+  const { user_id, favorites_table } = request.params;
+  const { movie_id, title, poster_path, release_date, vote_average, overview } = request.body;
+  
+  return addFavoriteForUser(
+    request,
+    response,
+    favorites_table,
+    { movie_id, user_id, title, poster_path, release_date, vote_average, overview }
+  );
+});
 
+// Delete favorite for a user
+app.delete('/api/v1/users/:user_id/:favorites_table/:movie_id', findUser, (request, response) => {
+  const {favorites_table} = request.params;
 
-// Books
-
+  return deleteFavoriteForUser(request, response, favorites_table);
+});
 
 
 app.listen(app.get('port'), () => {

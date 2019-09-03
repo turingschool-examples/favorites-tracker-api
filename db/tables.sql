@@ -16,25 +16,35 @@ CREATE TABLE moviefavorites (
   id SERIAL NOT NULL PRIMARY KEY,
   movie_id INTEGER NOT NULL,
   user_id INTEGER NOT NULL,
-  title VARCHAR (123) NOT NULL,
+  title VARCHAR (250) NOT NULL,
   poster_path VARCHAR (250) NOT NULL,
-  release_date VARCHAR (123) NOT NULL,
-  vote_average VARCHAR (123) NOT NULL,
-  overview VARCHAR NOT NULL
+  release_date VARCHAR (250) NOT NULL,
+  vote_average VARCHAR (250) NOT NULL,
+  overview VARCHAR (250) NOT NULL
 );
 
 CREATE TABLE bookfavorites (
   id SERIAL NOT NULL PRIMARY KEY,
   book_id INTEGER NOT NULL,
-  user_id INTEGER NOT NULL
-
+  user_id INTEGER NOT NULL,
+  artistName VARCHAR (250) NOT NULL,
+  collectionName VARCHAR (250) NOT NULL,
+  artworkUrl100 VARCHAR (250) NOT NULL,
+  releaseDate VARCHAR (250) NOT NULL,
+  description VARCHAR (250) NOT NULL,
+  primaryGenreName VARCHAR (250) NOT NULL
 );
 
-CREATE TABLE songfavorites (
+CREATE TABLE albumfavorites (
   id SERIAL NOT NULL PRIMARY KEY,
-  song_id INTEGER NOT NULL,
-  user_id INTEGER NOT NULL
-
+  album_id INTEGER NOT NULL,
+  user_id INTEGER NOT NULL,
+  artistName VARCHAR (250) NOT NULL,
+  collectionName VARCHAR (250) NOT NULL,
+  artworkUrl100 VARCHAR (250) NOT NULL,
+  releaseDate VARCHAR (250) NOT NULL,
+  contentAdvisoryRating VARCHAR (250) NOT NULL,
+  primaryGenreName VARCHAR (250) NOT NULL
 );
 
 INSERT INTO users (name, password, email)
