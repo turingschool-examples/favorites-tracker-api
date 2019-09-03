@@ -69,17 +69,7 @@ The body of the POST request to add a favorite will differ depending on what dat
 
 | purpose | url | verb | request body | sample success response |
 |----|------|------|---------|---------------- |
-| Add a favortie for a user | `/api/v1/users/:user_id/:favorites_type` | POST | `{}` | `{}` |
+| Add a favortie for a user | `/api/v1/users/:user_id/:favorites_type` | POST | `{see above for information to include in this object}` | `{}` |
 | Get all favorites for a user | `/api/v1/users/:user_id/:favorites_type` | GET | none | `{favorites: [array of favorites]}` |
 | Delete a favorite for a user | `/api/v1/users/:user_id/:favorites_type/:favorite_id` | DELETE | none | 204 status code, no response body content |
-
-##### Add Favorite: POST 
-
-To save a favorite you must send into the body: movie_id, user_id and title, poster_path, release_date, vote_average, overview.
-Keep in mind the response only gives the new favorite id
-
-##### Receive All Favorites: GET 
-
-To get a users favorite movies you need to send in the user ID through the params. This will return an array favorite objects.
-
 

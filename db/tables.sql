@@ -27,20 +27,20 @@ CREATE TABLE bookfavorites (
   id SERIAL NOT NULL PRIMARY KEY,
   book_id INTEGER NOT NULL,
   user_id INTEGER NOT NULL,
-  artistName VARCHAR (250) NOT NULL,
-  collectionName VARCHAR (250) NOT NULL,
+  authorName VARCHAR (250) NOT NULL,
+  bookName VARCHAR (250) NOT NULL,
   artworkUrl100 VARCHAR (250) NOT NULL,
   releaseDate VARCHAR (250) NOT NULL,
-  description VARCHAR (250) NOT NULL,
+  description TEXT NOT NULL,
   primaryGenreName VARCHAR (250) NOT NULL
 );
 
 CREATE TABLE albumfavorites (
   id SERIAL NOT NULL PRIMARY KEY,
-  album_id INTEGER NOT NULL,
   user_id INTEGER NOT NULL,
+  album_id INTEGER NOT NULL,
   artistName VARCHAR (250) NOT NULL,
-  collectionName VARCHAR (250) NOT NULL,
+  albumName VARCHAR (250) NOT NULL,
   artworkUrl100 VARCHAR (250) NOT NULL,
   releaseDate VARCHAR (250) NOT NULL,
   contentAdvisoryRating VARCHAR (250) NOT NULL,

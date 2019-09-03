@@ -9,7 +9,7 @@ const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
 
 app.get('/', (request, response) => {
-  return response.status(200).json({hello: "world", documentation: "repo URL to be added"});
+  return response.status(200).json({hello: "world", documentation: "https://github.com/turingschool-examples/favorites-tracker-api"});
 });
 
 // Login
@@ -113,9 +113,9 @@ function deleteFavoriteForUser(request, response, tableName) {
   if (tableName === 'moviefavorites') {
     var criteria = {movie_id: request.params.favorite_id, user_id};
   } else if (tableName === 'bookFavorites') {
-
+    var criteria = {book_id: request.params.favorite_id, user_id};
   } else if (tableName === 'albumFavorites') {
-
+    var criteria = {album_id: request.params.favorite_id, user_id};
   }
 
   // Strange error here where if invalid movie_id is supplied, then it goes tot he catch
