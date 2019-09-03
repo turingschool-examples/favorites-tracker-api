@@ -29,7 +29,7 @@ CREATE TABLE bookfavorites (
   user_id INTEGER NOT NULL,
   author_name VARCHAR (250) NOT NULL,
   book_name VARCHAR (250) NOT NULL,
-  artworkUrl100 VARCHAR (250) NOT NULL,
+  artwork_url VARCHAR (250) NOT NULL,
   release_date VARCHAR (250) NOT NULL,
   description TEXT NOT NULL,
   primary_genre_name VARCHAR (250) NOT NULL
@@ -41,7 +41,7 @@ CREATE TABLE albumfavorites (
   album_id INTEGER NOT NULL,
   artist_name VARCHAR (250) NOT NULL,
   album_name VARCHAR (250) NOT NULL,
-  artworkUrl100 VARCHAR (250) NOT NULL,
+  artwork_url VARCHAR (250) NOT NULL,
   release_date VARCHAR (250) NOT NULL,
   content_advisory_rating VARCHAR (250) NOT NULL,
   primary_genre_name VARCHAR (250) NOT NULL

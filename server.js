@@ -82,17 +82,19 @@ function findFavoritesForUser(request, response, tableName) {
 app.post('/api/v1/users/:user_id/:favorites_type', findUser, (request, response) => {
   const { user_id, favorites_type } = request.params;
   
-  return addFavoriteForUser(request, response, favorites_type, request.body);
+  return addFavoriteForUser(request, response, favorites_type, request.body, user_id);
 });
 
-function addFavoriteForUser(request, response, tableName, data) {
-  database(tableName).insert(data, '*')
+function addFavoriteForUser(request, response, tableName, data, user_id) {
+  const itemToInsert = {...data, user_id};
+
+  database(tableName).insert(itemToInsert, '*')
     .then(favorite => {
       if (favorite) {
         return response.status(201).json(favorite[0]);
       } else {
         // Incorrect information was sent to create favorite
-        return response.status(422).json({error: `Could not create favorite for user ${data.user_id}`});
+        return response.status(422).json({error: `Could not create favorite for user ${user_id}`});
       }
     })
     .catch(err => response.status(500).json({error: err}));
@@ -112,9 +114,9 @@ function deleteFavoriteForUser(request, response, tableName) {
 
   if (tableName === 'moviefavorites') {
     var criteria = {movie_id: request.params.favorite_id, user_id};
-  } else if (tableName === 'bookFavorites') {
+  } else if (tableName === 'bookfavorites') {
     var criteria = {book_id: request.params.favorite_id, user_id};
-  } else if (tableName === 'albumFavorites') {
+  } else if (tableName === 'albumfavorites') {
     var criteria = {album_id: request.params.favorite_id, user_id};
   }
 
