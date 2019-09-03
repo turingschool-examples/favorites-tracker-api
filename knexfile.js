@@ -1,7 +1,7 @@
 module.exports = {
   development: {
     client: 'pg',
-    connection: 'postgres://localhost/favoerites_tracker',
+    connection: 'postgres://localhost/favorites_tracker',
     useNullAsDefault: true
   }
 };
