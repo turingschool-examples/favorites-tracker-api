@@ -1,7 +1,7 @@
 DROP DATABASE IF EXISTS favorites_tracker;
 CREATE DATABASE favorites_tracker;
 
-\c mod3_tracker;
+\c favorites_tracker;
 
 CREATE TABLE users (
   id SERIAL NOT NULL PRIMARY KEY,
@@ -27,24 +27,24 @@ CREATE TABLE bookfavorites (
   id SERIAL NOT NULL PRIMARY KEY,
   book_id INTEGER NOT NULL,
   user_id INTEGER NOT NULL,
-  authorName VARCHAR (250) NOT NULL,
-  bookName VARCHAR (250) NOT NULL,
+  author_name VARCHAR (250) NOT NULL,
+  book_name VARCHAR (250) NOT NULL,
   artworkUrl100 VARCHAR (250) NOT NULL,
-  releaseDate VARCHAR (250) NOT NULL,
+  release_date VARCHAR (250) NOT NULL,
   description TEXT NOT NULL,
-  primaryGenreName VARCHAR (250) NOT NULL
+  primary_genre_name VARCHAR (250) NOT NULL
 );
 
 CREATE TABLE albumfavorites (
   id SERIAL NOT NULL PRIMARY KEY,
   user_id INTEGER NOT NULL,
   album_id INTEGER NOT NULL,
-  artistName VARCHAR (250) NOT NULL,
-  albumName VARCHAR (250) NOT NULL,
+  artist_name VARCHAR (250) NOT NULL,
+  album_name VARCHAR (250) NOT NULL,
   artworkUrl100 VARCHAR (250) NOT NULL,
-  releaseDate VARCHAR (250) NOT NULL,
-  contentAdvisoryRating VARCHAR (250) NOT NULL,
-  primaryGenreName VARCHAR (250) NOT NULL
+  release_date VARCHAR (250) NOT NULL,
+  content_advisory_rating VARCHAR (250) NOT NULL,
+  primary_genre_name VARCHAR (250) NOT NULL
 );
 
 INSERT INTO users (name, password, email)

@@ -7,8 +7,8 @@ This repository will serve as your "backend", allowing you to connect to a persi
 ## Project Setup
 
 * Clone down this repo and run `npm install`
-* If you don't have postgresSQl, scroll down to `Setup Postgresql` and follow those steps.
-* Run `npm start` - visit `localhost:3001/api/users` - you should see a json response with a single user.
+* If you don't have postgresSQl, scroll down to `Setup Postgresql` and follow those steps
+* Run `npm start` - visit `localhost:3001/` - you should see a JSON response some information
 
 ## Setup Postgresql
 
@@ -25,9 +25,9 @@ For information on how to do this read [this](https://postgresapp.com/documentat
 * You will need to close your terminal window and re-open it for the changes to take effect
   
 #### Creating our database
-* Make sure you are in you `movie-tracker` project folder
-* From the command line, run the following command to create a users database `psql -f ./database/users.sql`
-* When you start up the server (`npm install` and `npm start`), you should now be able to visit `localhost:3000/api/users` and see the database with a single user (Taylor)
+* Make sure you are in you `favorties-tracker-api` directory
+* From the command line, run the following command to create a users database `psql -f ./db/tables.sql`
+* When you start up the server (`npm install` and `npm start`), you should now be able to visit `localhost:3001/` and you should see a JSON response some information
   
 #### Press CMD-T to create a new tab in your terminal
 * Type `psql`. This will get you into the interactive postgres terminal. From here you can run postgres and sql commands. You might get an error *psql: FATAL: database "username" does not exist* To resolve this error type *createdb 'somthing does not exist'*
@@ -42,10 +42,10 @@ You will be using the fetch API to make all your api calls. If you are making a 
 
 The database starts off with a single user inside. -> { email: "alan@turing.io" password: "password" }
 
-| purpose | url | verb | request body | sample success response |
-|----|------|------|---------|---------------- |
+| Purpose | URL | Verb | Request URL Parameters | Request Body | Sample Success Response |
+|----|----|----|----|----|----|
 | Login a user |`/api/v1/login`| GET | `{email: <String>, password: <String>}` | For matching email and password: `{id: 2, name: "Gary", email: "gary@gmail.com"}` |
-| Create new user account |`/api/v1/users`| POST | `{name: <String>, email: <String>, password: <String>}` | For successful new account: `{id: 2, name: "Gary", email: "gary@gmail.com"}` |
+| Create new user account |`/api/v1/users`| POST | `{name: <String>, email: <String>, password: <String>}` | For successful new account: `{id: 1, name: "Alan", email: "alan@turing.io"}` |
 
 Note that account emails must be unique.
 
@@ -53,9 +53,9 @@ Note that account emails must be unique.
 
 The `:favorites_type` should be replaced by the type of favorites your app is working with:
 
-* `movieFavorites`
-* `bookFavorites`
-* `albumFavorites`
+* `moviefavorites`
+* `bookfavorites`
+* `albumfavorites`
 
 The `:user_id` should be replaced with the integer `id` of the user (given in the response from logging in).
 
@@ -63,12 +63,14 @@ The `:favorites_id` should be replaced with the `id` of the favorite.
 
 The body of the POST request to add a favorite will differ depending on what data you are working with:
 
-* `movieFavorites` requires: `movie_id, title, poster_path, release_date, vote_average, overview`
-* `bookFavorites` requires: ``
-* `albumFavorites` requires: ``
+* `moviefavorites` requires: `movie_id (Integer), title (String), poster_path (String), release_date (String), vote_average (String), overview (String)`
+* `bookfavorites` requires: ``
+* `albumfavorites` requires: ``
 
-| purpose | url | verb | request body | sample success response |
-|----|------|------|---------|---------------- |
+*Note:* The object keys passed in the request body will not completely match the object keys given back from the iTunes Search API
+
+| Purpose | URL | Verb | Request URL Parameters | Request Body | Sample Success Response |
+|----|----|----|----|----|----|
 | Add a favortie for a user | `/api/v1/users/:user_id/:favorites_type` | POST | `{see above for information to include in this object}` | `{}` |
 | Get all favorites for a user | `/api/v1/users/:user_id/:favorites_type` | GET | none | `{favorites: [array of favorites]}` |
 | Delete a favorite for a user | `/api/v1/users/:user_id/:favorites_type/:favorite_id` | DELETE | none | 204 status code, no response body content |
