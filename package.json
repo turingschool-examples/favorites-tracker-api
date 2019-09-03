@@ -1,14 +1,14 @@
 {
-  "name": "mod3-tracker-api",
+  "name": "favorites-tracker-api",
   "version": "1.0.0",
-  "description": "API for Song Tracker project",
+  "description": "API for Favorites Tracker project (aka Movie Tracker)",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
   "author": "Turing School of Software and Design",
-  "license": "MIT",
+  "license": "Creative Commons",
   "dependencies": {
     "express": "^4.17.1",
     "knex": "^0.19.3",

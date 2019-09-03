@@ -1,5 +1,5 @@
-DROP DATABASE IF EXISTS mod3_tracker;
-CREATE DATABASE mod3_tracker;
+DROP DATABASE IF EXISTS favorites_tracker;
+CREATE DATABASE favorites_tracker;
 
 \c mod3_tracker;
 

@@ -60,10 +60,10 @@ function findUser(request, response, next) {
 
 // FAVORITES ROUTES
 // Get all favorites for a user
-app.get('/api/v1/users/:user_id/:favorites_table', findUser, (request, response) => {
-  const {favorites_table} = request.params;
+app.get('/api/v1/users/:user_id/:favorites_type', findUser, (request, response) => {
+  const {favorites_type} = request.params;
 
-  return findFavoritesForUser(request, response, favorites_table);
+  return findFavoritesForUser(request, response, favorites_type);
 });
 
 function findFavoritesForUser(request, response, tableName) {
@@ -79,10 +79,10 @@ function findFavoritesForUser(request, response, tableName) {
 
 
 // Add favorite for a user
-app.post('/api/v1/users/:user_id/:favorites_table', findUser, (request, response) => {
-  const { user_id, favorites_table } = request.params;
+app.post('/api/v1/users/:user_id/:favorites_type', findUser, (request, response) => {
+  const { user_id, favorites_type } = request.params;
   
-  return addFavoriteForUser(request, response, favorites_table, request.body);
+  return addFavoriteForUser(request, response, favorites_type, request.body);
 });
 
 function addFavoriteForUser(request, response, tableName, data) {
@@ -101,10 +101,10 @@ function addFavoriteForUser(request, response, tableName, data) {
 
 
 // Delete favorite for a user
-app.delete('/api/v1/users/:user_id/:favorites_table/:favorite_id', findUser, (request, response) => {
-  const {favorites_table} = request.params;
+app.delete('/api/v1/users/:user_id/:favorites_type/:favorite_id', findUser, (request, response) => {
+  const {favorites_type} = request.params;
 
-  return deleteFavoriteForUser(request, response, favorites_table);
+  return deleteFavoriteForUser(request, response, favorites_type);
 });
 
 function deleteFavoriteForUser(request, response, tableName) {
