@@ -1,19 +1,24 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
 
 app.set('port', 3001 || process.env.PORT);
 app.use(express.json());
 
+// DB Setup
 const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
+
+// CORS Setup - enable all requests
+app.use(cors());
 
 app.get('/', (request, response) => {
   return response.status(200).json({hello: "world", documentation: "https://github.com/turingschool-examples/favorites-tracker-api"});
 });
 
 // Login
-app.get('/api/v1/login', (request, response) => {
+app.post('/api/v1/login', (request, response) => {
   const { email, password } = request.body;
   database('users').where({ email, password })
     .then(users => {
@@ -42,8 +47,7 @@ app.post('/api/v1/users', (request, response) => {
     .catch(err => response.status(500).json({error: err}));
 });
 
-// Favorites middleware functions
-
+// Favorites middleware function
 function findUser(request, response, next) {
   const id = request.params.user_id;
   database('users').where({id})
