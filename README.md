@@ -25,8 +25,8 @@ For information on how to do this read [this](https://postgresapp.com/documentat
 * You will need to close your terminal window and re-open it for the changes to take effect
   
 #### Creating our database
-1. Make sure you are in the root of your `favorites-tracker-api` directory
-1. From the command line, run the following command to create a users database `psql -f ./db/tables.sql`
+* Make sure you are in the root of your `favorites-tracker-api` directory
+* From the command line, run the following command to create a users database `psql -f ./db/tables.sql`
 
   After you run this command, the output in the terminal should look something like:
   
@@ -45,7 +45,7 @@ For information on how to do this read [this](https://postgresapp.com/documentat
   
   If it doesn't look like this, let your instructors know!
 
-1. When you start up the server (`npm install` and `npm start`), you should now be able to visit `localhost:3001/` and you should see a JSON response with some information
+* When you start up the server (`npm install` and `npm start`), you should now be able to visit `localhost:3001/` and you should see a JSON response with some information
   
 #### Press CMD-T to create a new tab in your terminal
 * Type `psql`. This will get you into the interactive postgres terminal. From here you can run postgres and sql commands. You might get an error *psql: FATAL: database "username" does not exist* To resolve this error type *createdb 'something does not exist'*
