@@ -27,6 +27,23 @@ For information on how to do this read [this](https://postgresapp.com/documentat
 #### Creating our database
 * Make sure you are in you `favorties-tracker-api` directory
 * From the command line, run the following command to create a users database `psql -f ./db/tables.sql`
+
+  After you run this command, the output in the terminal should look something like:
+  
+  ```
+  DROP DATABASE
+  CREATE DATABASE
+  You are now connected to database "favorites_tracker" as user "robbie".
+  CREATE TABLE
+  CREATE INDEX
+  CREATE TABLE
+  CREATE TABLE
+  CREATE TABLE
+  INSERT 0 1
+  ```
+  
+  If it doesn't look like this, let your instructors know!
+
 * When you start up the server (`npm install` and `npm start`), you should now be able to visit `localhost:3001/` and you should see a JSON response some information
   
 #### Press CMD-T to create a new tab in your terminal
