@@ -20,7 +20,7 @@ CREATE TABLE moviefavorites (
   poster_path VARCHAR (250) NOT NULL,
   release_date VARCHAR (250) NOT NULL,
   vote_average VARCHAR (250) NOT NULL,
-  overview TEXT NOT NULL
+  overview VARCHAR (1000) NOT NULL
 );
 
 CREATE TABLE bookfavorites (
